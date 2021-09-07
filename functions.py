@@ -92,6 +92,50 @@ def check_if_free(board, row, column, length, direction):
     return check
 
 
+def list_of_keys(board, row, column, length, direction):
+    """Returns a list with all the keys where the ship is placed on board"""
+    key_list = []
+    if direction.lower() == "up":
+        num = row - length + 1
+        if check_if_key(board, str(row), column) and check_if_key(board, str(num), column):
+            for i in range(length):
+                temp = str(row) + column
+                row -= 1
+                key_list.append(temp)
+        return key_list
+    elif direction.lower() == "down":
+        num = row + length - 1
+        if check_if_key(board, str(row), column) and check_if_key(board, str(num), column):
+            for i in range(length):
+                temp = str(row) + column
+                row += 1
+                key_list.append(temp)
+        return key_list
+    elif direction.lower() == "right":
+        letters = "ABCDEFGHIJKLMNOP"
+        start_letter_index = letters.index(column)
+        end_letter_index = start_letter_index + length - 1
+        if check_if_key(board, str(row), column) and check_if_key(board, str(row), letters[end_letter_index]):
+            x = 0
+            for i in range(length):
+                temp = str(row) + letters[start_letter_index + x]
+                x += 1
+                key_list.append(temp)
+            return key_list
+    elif direction.lower() == "left":
+        letters = "ABCDEFGHIJKLMNOP"
+        start_letter_index = letters.index(column)
+        end_letter_index = start_letter_index - length + 1
+        if check_if_key(board, str(row), column) and check_if_key(board, str(row), letters[end_letter_index]):
+            x = 0
+            for i in range(length):
+                temp = str(row) + letters[start_letter_index - x]
+                x += 1
+                key_list.append(temp)
+            return key_list
+
+
+
 def check_if_hit_the_mark(board, row, column):
     """Checks if the place where you decided to attack matches the ship on board_set"""
     start = row + column
