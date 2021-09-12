@@ -2,7 +2,7 @@ import sys
 
 import functions as f
 
-
+letters = "XABCDEFGHIJKLMNOP"
 class Board:
     def __init__(self, name):
         self.name = name
@@ -76,7 +76,8 @@ class Board:
 
     def set_ship_up(self, length, x, y):
         """Sets the ship up on a board"""
-        if f.check_if_key(self.board_set, x, y) and f.check_range(x, y, length, "up") and f.check_if_free(self.board_set, x, y, length, "up"):
+        if f.check_if_key(self.board_set, x, y) and f.check_range(x, y, length, "up") and f.check_if_free(self.board_set, x, y, length, "up") \
+                and f.check_space_around_start_and_end_when_up(self.board_set, (x + y), str(int(x) - length + 1) + y):
             counter = int(x)
             for i in range(length):
                 coordinates = str(counter) + y
@@ -88,7 +89,8 @@ class Board:
 
     def set_ship_down(self, length, x, y):
         """Sets the ship down on a board"""
-        if f.check_if_key(self.board_set, x, y) and f.check_range(x, y, length, "down") and f.check_if_free(self.board_set, x, y, length, "down"):
+        if f.check_if_key(self.board_set, x, y) and f.check_range(x, y, length, "down") and f.check_if_free(self.board_set, x, y, length, "down")\
+                and f.check_space_around_start_and_end_when_down(self.board_set, (x + y), str(int(x) + length - 1) + y):
             counter = int(x)
             for i in range(length):
                 coordinates = str(counter) + y
@@ -100,9 +102,10 @@ class Board:
 
     def set_ship_right(self, length, x, y):
         """Sets the ship right on a board"""
-        letters = "ABCDEFGHIJ"
+        #letters = "ABCDEFGHIJ"
         letter_index = letters.index(y)
-        if f.check_if_key(self.board_set, x, y) and f.check_range(x, y, length, "right") and f.check_if_free(self.board_set, x, y, length, "right"):
+        if f.check_if_key(self.board_set, x, y) and f.check_range(x, y, length, "right") and f.check_if_free(self.board_set, x, y, length, "right")\
+                and f.check_space_around_start_and_end_when_right(self.board_set, (x + y), x + letters[letters.index(y) + length - 1]):
             for i in range(length):
                 coordinates = x + letters[letter_index]
                 self.board_set[int(x) - 1][coordinates] = "X"
@@ -115,7 +118,8 @@ class Board:
         """Sets the ship down on a board"""
         letters = "ABCDEFGHIJ"
         letter_index = letters.index(y)
-        if f.check_if_key(self.board_set, x, y) and f.check_range(x, y, length, "left") and f.check_if_free(self.board_set, x, y, length, "left"):
+        if f.check_if_key(self.board_set, x, y) and f.check_range(x, y, length, "left") and f.check_if_free(self.board_set, x, y, length, "left")\
+                and f.check_space_around_start_and_end_when_left(self.board_set, (x+y), x + letters[letters.index(y) - length + 1]):
             for i in range(length):
                 coordinates = x + letters[letter_index]
                 self.board_set[int(x) - 1][coordinates] = "X"

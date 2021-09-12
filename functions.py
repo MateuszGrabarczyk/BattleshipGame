@@ -41,15 +41,6 @@ def check_range(row, column, length, direction):
     return check
 
 
-def check_space_around(row, column, length):
-    """Every ship needs to have one free spot around and this function checks that"""
-    check = True
-    numbers = range(1, 11)
-    letters = "ABCDEFGHIJ"
-    letter_index = letters.index(column)
-    # Checking corners
-
-
 def check_if_free(board, row, column, length, direction):
     """Checks if the spots where we want to put the boats are empty"""
     letters = "ABCDEFGHIJ"
@@ -134,6 +125,133 @@ def list_of_keys(board, row, column, length, direction):
                 key_list.append(temp)
             return key_list
 
+
+def check_space_around_start_and_end_when_right(board, start, end):
+    """Function check if every sport around the start and end of the ship is free when direction given is RIGHT"""
+    letters = "XABCDEFGHIJKLMNOP"
+    if start[0] == "1" and start[1] == "0":
+        start = [(start[0] + start[1]), start[2]]
+    if end[0] == "1" and end[1] == "0":
+        end = [(end[0] + end[1]), end[2]]
+    around_start = [str(int(start[0]) - 1) + start[1], str(int(start[0]) + 1) + start[1],
+                    str(int(start[0]) - 1) + letters[letters.index(start[1]) - 1], start[0] + letters[letters.index(start[1]) - 1],
+                    str(int(start[0]) + 1) + letters[letters.index(start[1]) - 1]]
+    around_end = [str(int(end[0]) - 1) + end[1], str(int(end[0]) + 1) + end[1],
+                  str(int(end[0]) - 1) + letters[letters.index(end[1]) + 1], end[0] + letters[letters.index(end[1]) + 1],
+                  str(int(end[0]) + 1) + letters[letters.index(end[1]) + 1]]
+    for key in around_start:
+        try:
+            if board[int(key[0]) - 1][key] == "X":
+                return False
+        except KeyError:
+            continue
+    for key in around_end:
+        try:
+            if board[int(key[0]) - 1][key] == "X":
+                return False
+        except KeyError:
+            continue
+    return True
+
+
+def check_space_around_start_and_end_when_left(board, start, end):
+    """Function check if every sport around the start and end of the ship is free when direction given is LEFT"""
+    letters = "XABCDEFGHIJKLMNOP"
+    if start[0] == "1" and start[1] == "0":
+        start = [(start[0] + start[1]), start[2]]
+    if end[0] == "1" and end[1] == "0":
+        end = [(end[0] + end[1]), end[2]]
+    around_start = [str(int(start[0]) - 1) + start[1], str(int(start[0]) + 1) + start[1],
+                  str(int(start[0]) - 1) + letters[letters.index(start[1]) + 1],start[0] + letters[letters.index(start[1]) + 1],
+                  str(int(start[0]) + 1) + letters[letters.index(start[1]) + 1]]
+    around_end = [str(int(end[0]) - 1) + end[1], str(int(end[0]) + 1) + end[1],
+                    str(int(end[0]) - 1) + letters[letters.index(end[1]) - 1], end[0] + letters[letters.index(end[1]) - 1],
+                    str(int(end[0]) + 1) + letters[letters.index(end[1]) - 1]]
+    for key in around_start:
+        try:
+            if board[int(key[0]) - 1][key] == "X":
+                return False
+        except KeyError:
+            continue
+
+    for key in around_end:
+        try:
+            if board[int(key[0]) - 1][key] == "X":
+                return False
+        except KeyError:
+            continue
+    return True
+
+
+def check_space_around_start_and_end_when_up(board, start, end):
+    """Function check if every sport around the start and end of the ship is free when direction given is UP"""
+    letters = "XABCDEFGHIJKLMNOP"
+    if start[0] == "1" and start[1] == "0":
+        start = [(start[0] + start[1]), start[2]]
+    if end[0] == "1" and end[1] == "0":
+        end = [(end[0] + end[1]), end[2]]
+    around_start = [start[0] + letters[letters.index(start[1]) - 1], start[0] + letters[letters.index(start[1]) + 1],
+                    str(int(start[0]) + 1) + letters[letters.index(start[1]) - 1],
+                    str(int(start[0]) + 1) + letters[letters.index(start[1]) + 1],
+                    str(int(start[0]) + 1) + start[1]]
+    around_end = [end[0] + letters[letters.index(end[1]) - 1], end[0] + letters[letters.index(end[1]) + 1],
+                  str(int(end[0]) - 1) + letters[letters.index(end[1]) - 1],
+                  str(int(end[0]) - 1) + letters[letters.index(end[1]) + 1],
+                  str(int(end[0]) - 1) + end[1]]
+    for key in around_start:
+        print("Checking: " + key)
+        try:
+            if board[int(key[0]) - 1][key] == "X":
+                return False
+        except KeyError:
+            continue
+    for key in around_end:
+        print("Checking: " + key)
+        try:
+            if board[int(key[0]) - 1][key] == "X":
+                return False
+        except KeyError:
+            continue
+    return True
+
+
+def check_space_around_start_and_end_when_down(board, start, end):
+    """Function check if every sport around the start and end of the ship is free when direction given is DOWN"""
+    letters = "XABCDEFGHIJKLMNOP"
+    if start[0] == "1" and start[1] == "0":
+        start = [(start[0] + start[1]), start[2]]
+    if end[0] == "1" and end[1] == "0":
+        end = [(end[0] + end[1]), end[2]]
+    around_start = [start[0] + letters[letters.index(start[1]) - 1], start[0] + letters[letters.index(start[1]) + 1],
+                  str(int(start[0]) - 1) + letters[letters.index(start[1]) - 1],
+                  str(int(start[0]) - 1) + letters[letters.index(start[1]) + 1],
+                  str(int(start[0]) - 1) + start[1]]
+    around_end = [end[0] + letters[letters.index(end[1]) - 1], end[0] + letters[letters.index(end[1]) + 1],
+                    str(int(end[0]) + 1) + letters[letters.index(end[1]) - 1],
+                    str(int(end[0]) + 1) + letters[letters.index(end[1]) + 1],
+                    str(int(end[0]) + 1) + end[1]]
+    for key in around_start:
+        try:
+            if board[int(key[0]) - 1][key] == "X":
+                return False
+        except KeyError:
+            continue
+    for key in around_end:
+        try:
+            if board[int(key[0]) - 1][key] == "X":
+                return False
+        except KeyError:
+            continue
+    return True
+
+
+"""
+def check_space_around(board, key_list):
+    Function checks if every spot around the ship (length of 1) is free
+    i = 1
+    for key in key_list:
+        if i == 1:
+"""
 
 
 def check_if_hit_the_mark(board, row, column):
